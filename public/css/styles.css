@@ -22,6 +22,12 @@ body {
 
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
 .status {
     background-color: #dbdbdb;
 
@@ -29,4 +35,15 @@ body {
 
 .status_body {
     display: flex;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 5px 0;
+    padding: 0;
 }
