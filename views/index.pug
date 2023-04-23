@@ -1,0 +1,50 @@
+doctype
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        title Drone Webpage
+        link(href="/css/styles.css" rel="stylesheet")
+        script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+        script(src="/scripts/drone.js" )
+
+    body
+        .camera
+            .camera_one
+                h1.camera_one Front Cam
+                img#webcam(src= '/frontvideo', autoplay, muted, playsinline)
+
+            .camera_two
+                h1.camera_one Bottom Cam
+                img#webcam(src= '/bottomvideo', autoplay, muted, playsinline)
+        .status
+            h2 Drone State
+            .status_body
+                ul(class='drone_info')
+                    li.drone_name Name: 
+                    li.drone_gps Gps: 
+                    li.drone_battery Battery:
+                    li.drone_heart Last Heartbeat:
+                    li.drone_armable Armable:
+                    li.drone_status System Status: 
+                    li.drone_mode Mode: 
+                ul(class='drone_direction')
+                    li.drone_head Heading: 
+                    li.drone_att Attitude: 
+                    li.drone_vel Velocity:
+                    li.drone_air_speed Air Speed: 
+                    li.drone_ground_speed Ground Speed:
+                    li.drone_arm Armed:
+                    li.drone_home Home Location:
+
+script.
+
+    $(document).ready(function () {
+        function fetchData() {
+            $.get('/drone/json', function (data) {
+                editDroneInfo(data.info)
+                editDroneDirection(data.direction)
+                setTimeout(fetchData, 2000)
+            });
+        }
+        fetchData()
+    });

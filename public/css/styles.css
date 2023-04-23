@@ -1,0 +1,32 @@
+html {
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: #333;
+    background-color: #f7f7f7;
+    margin: 0em 10em;
+    padding: 0;
+}
+
+.camera {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #edecec;
+
+}
+
+.status {
+    background-color: #dbdbdb;
+
+}
+
+.status_body {
+    display: flex;
+}
