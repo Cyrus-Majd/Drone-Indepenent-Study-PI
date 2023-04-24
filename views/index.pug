@@ -11,11 +11,11 @@ html(lang='en')
         .camera
             .camera_one
                 h1.camera_one Front Cam
-                img#webcam(src= '/frontvideo', autoplay, muted, playsinline)
+                img#webcam(src= '/video/front', autoplay, muted, playsinline)
 
             .camera_two
                 h1.camera_one Bottom Cam
-                img#webcam(src= '/bottomvideo', autoplay, muted, playsinline)
+                img#webcam(src= '/video/bottom', autoplay, muted, playsinline)
         .status
             h2 Drone State
             .status_body
@@ -35,7 +35,9 @@ html(lang='en')
                     li.drone_ground_speed Ground Speed:
                     li.drone_arm Armed:
                     li.drone_home Home Location:
-
+        .commands
+            h2 Drone Commands
+            button.arm(onclick="disarmOrArm()")
 script.
 
     $(document).ready(function () {

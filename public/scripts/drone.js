@@ -18,3 +18,18 @@ function editDroneDirection(info) {
     $('.drone_home').text(`Home Location: ${info.drone_home}`)
 
 }
+
+async function disarmOrArm() {
+    var response = await fetch('/api/arm', {
+        'method': "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    var res = await response.json();
+    if (res.armed) {
+        $('.arm').text("Disarm").removeClass("armed").addClass("disarmed")
+    } else {
+        $('.arm').text("Arm").removeClass("disarmed").addClass("armed")
+    }
+}

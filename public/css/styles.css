@@ -1,49 +1,68 @@
 html {
-    font-size: 16px;
-    font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
 }
 
 body {
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    color: #333;
-    background-color: #f7f7f7;
-    margin: 0em 10em;
-    padding: 0;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #333;
+  background-color: #f7f7f7;
+  margin: 0em 10em;
+  padding: 0;
 }
 
 .camera {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #edecec;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #edecec;
 }
 
 img {
-    max-width: 100%;
-    height: auto;
-    margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
 }
 
 .status {
-    background-color: #dbdbdb;
-
+  background-color: #dbdbdb;
 }
 
 .status_body {
-    display: flex;
+  display: flex;
 }
 
 ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 li {
-    margin: 5px 0;
-    padding: 0;
+  margin: 5px 0;
+  padding: 0;
+}
+.disarmed {
+  color: red;
+}
+.arned {
+  color: green;
+}
+button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+button:hover {
+  background-color: #97bbb9; /* Green */
+  color: black;
 }
