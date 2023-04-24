@@ -37,41 +37,48 @@ html(lang='en')
                     li.drone_home Home Location:
         .commands
             h2 Drone Commands
-            button.arm(onclick="disarmOrArm()")
-        div#map
+            .command_buttons
+                button.arm(onclick="disarmOrArm()")
+        .map
+            div#map
 script.
     var map;
+
     function initMap() {
 
         // The location of Geeksforgeeks office
         const gfg_office = {
-            lat: 28.50231,
-            lng: 77.40548
+        lat: 28.50231,
+        lng: 77.40548
         };
 
         // Create the map, centered at gfg_office
         map = new google.maps.Map(
             document.getElementById("map"), {
-
             // Set the zoom of the map
             zoom: 17.56,
             center: gfg_office,
+            mapTypeId:google.maps.MapTypeId.SATELLITE
         });
 
     }
-    funtion updateMap(lat,long){
-        map.setCenter({
-            lat:lat,
-            lng: long
-        })
+    function updateMap(lat,long){
+        if(!google){
+            return;
+        }
+        var location = new  google.maps.LatLng(lat,long)
+        map.setCenter(location)
+
     }
     $(document).ready(function () {
         function fetchData() {
-            $.get('/drone/json', function (data) {
+            $.get('/drone/api/json', function (data) {
+                console.log(data)
                 editDroneInfo(data.info)
                 editDroneDirection(data.direction)
                 //Need to parse gps data somehow?
-                updateMap(data.info.drone_gps)
+                updateMap(data.info.drone_gps.lat, data.info.drone_gps.long)
+                console.log(map)
                 setTimeout(fetchData, 2000)
             });
         }

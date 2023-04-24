@@ -1,14 +1,19 @@
+#
+
 from flask import Flask, Response, render_template, request, send_from_directory
 import cv2
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+from routes import drone_api
+
+load_dotenv(".env")
 
 
 app = Flask(__name__)
 app.jinja_env.add_extension("pypugjs.ext.jinja.PyPugJSExtension")
 
+app.register_blueprint(drone_api.drone)
 if os.environ.get("WERKZEUG_RUN_MAIN") or Flask.debug is False:
     print("init cameras", flush=True)
     camera_forward = cv2.VideoCapture(0)
@@ -55,4 +60,4 @@ def public(path):
 
 
 if __name__ == "__main__":
-    app.run(host=os.getenv("HOST"), port=os.getenv("PORT"), debug=True)
+    app.run(host=os.getenv("HOST"), port=os.getenv("PORT"), debug=False)

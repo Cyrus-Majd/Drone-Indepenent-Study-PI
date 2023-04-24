@@ -4,20 +4,32 @@ html {
 }
 
 body {
+  display: flex;
   align-items: center;
   justify-content: center;
-  display: flex;
   flex-direction: column;
   color: #333;
   background-color: #f7f7f7;
   margin: 0em 10em;
   padding: 0;
 }
+.map {
+  width: 100%;
+  height: 500px;
+}
+#map {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
 
 .camera {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 3em;
+  width: 100%;
   background-color: #edecec;
 }
 
@@ -29,12 +41,19 @@ img {
 
 .status {
   background-color: #dbdbdb;
+  width: 100%;
 }
 
 .status_body {
   display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+  gap: 3em;
 }
-
+.commands {
+  display: flex;
+  flex-direction: column;
+}
 ul {
   list-style: none;
   margin: 0;

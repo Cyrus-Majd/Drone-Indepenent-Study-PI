@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "/Users/mohamadkhawam/Library/Python/3.9/lib/python/site-packages",
+        "./routes"
+    ]
+}

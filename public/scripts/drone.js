@@ -1,6 +1,6 @@
 function editDroneInfo(info) {
     $('.drone_name').text(`Name: ${info.drone_name}`)
-    $('.drone_gps').text(`Gps: ${info.drone_gps}`)
+    $('.drone_gps').text(`Gps: Lat:${info.drone_gps.lat} Long: ${info.drone_gps.long} att: ${info.drone_gps.att}  `)
     $('.drone_battery').text(`Battery: ${info.drone_battery}`)
     $('.drone_heart').text(`Last Heartbeat: ${info.drone_heart}`)
     $('.drone_armable').text(`Armable: ${info.drone_armable}`)
@@ -15,6 +15,11 @@ function editDroneDirection(info) {
     $('.drone_air_speed').text(`Air Speed: ${info.drone_air_speed}`)
     $('.drone_ground_speed').text(`Ground Speed: ${info.drone_ground_speed}`)
     $('.drone_arm').text(`Armed: ${info.drone_arm}`)
+    if (info.drone_arm) {
+        $('.arm').text("Disarm").removeClass("armed").addClass("disarmed")
+    } else {
+        $('.arm').text("Arm").removeClass("disarmed").addClass("armed")
+    }
     $('.drone_home').text(`Home Location: ${info.drone_home}`)
 
 }

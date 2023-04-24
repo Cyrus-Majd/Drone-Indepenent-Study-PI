@@ -2,3 +2,5 @@ pypugjs
 flask
 opencv-python
 python-dotenv
+dronekit
+dronekit-sitl
