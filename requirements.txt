@@ -1,0 +1,4 @@
+pypugjs
+flask
+opencv-python
+python-dotenv

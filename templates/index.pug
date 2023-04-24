@@ -3,19 +3,19 @@ html(lang='en')
     head
         meta(charset='utf-8')
         title Drone Webpage
-        link(href="/css/styles.css" rel="stylesheet")
+        link(href="/public/css/styles.css" rel="stylesheet")
         script(src="https://code.jquery.com/jquery-3.6.0.min.js")
-        script(src="/scripts/drone.js" )
+        script(src="/public/scripts/drone.js" )
         script(src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyDOUOjCUfAoWjm7pAsSDnwqXgXPZeaylQY&callback=initMap&libraries=&v=weekly" async)
     body
         .camera
             .camera_one
                 h1.camera_one Front Cam
-                img#webcam(src= '/video/front', autoplay, muted, playsinline)
+                img#webcam(src= '/front_feed', autoplay, muted, playsinline)
 
             .camera_two
                 h1.camera_one Bottom Cam
-                img#webcam(src= '/video/bottom', autoplay, muted, playsinline)
+                img#webcam(src= '/bottom_feed', autoplay, muted, playsinline)
         .status
             h2 Drone State
             .status_body
