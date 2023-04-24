@@ -20,7 +20,7 @@ function editDroneDirection(info) {
 }
 
 async function disarmOrArm() {
-    var response = await fetch('/api/arm', {
+    var response = await fetch('/drone/api/arm', {
         'method': "post",
         headers: {
             "Content-Type": "application/json",
