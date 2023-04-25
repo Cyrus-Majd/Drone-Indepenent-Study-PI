@@ -18,6 +18,19 @@ def getIP():
 vehicle = connect(getIP(), heartbeat_timeout=0)
 
 
+@drone.route("/api/hud")
+def hud():
+    data = {
+        "roll": vehicle.attitude.roll,
+        "pitch": vehicle.attitude.pitch,
+        "heading": vehicle.heading,
+        "vario": vehicle.velocity[1],
+        "airspeed": vehicle.airspeed,
+        "altitude": vehicle.location.global_frame.alt,
+    }
+    return jsonify(data)
+
+
 @drone.route("/api/json")
 def json():
     gps = {

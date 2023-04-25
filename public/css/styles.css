@@ -9,14 +9,12 @@ body {
   justify-content: center;
   flex-direction: column;
   color: #333;
-  background-color: #f7f7f7;
+  background-color: #dee5e5;
   margin: 0em 10em;
   padding: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.map {
-  width: 100%;
-  height: 500px;
-}
+
 #map {
   margin: 0;
   padding: 0;
@@ -30,31 +28,55 @@ body {
   justify-content: center;
   gap: 3em;
   width: 100%;
-  background-color: #edecec;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #9dc5bb;
 }
 
 .status {
-  background-color: #dbdbdb;
+  background-color: #17b890;
   width: 100%;
 }
 
 .status_body {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-grow: 1;
   gap: 3em;
+}
+.drone_info,
+.drone_direction {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.drone_info li,
+.drone_direction li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.drone_info li:first-child,
+.drone_direction li:first-child {
+  border-top: 1px solid #ccc;
+}
+
+.drone_info li:last-child,
+.drone_direction li:last-child {
+  border-bottom: none;
 }
 .commands {
   display: flex;
   flex-direction: column;
+  padding: 2em;
+  background-color: #3b9c88;
+  width: 100%;
 }
-ul {
+/* ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -63,12 +85,12 @@ ul {
 li {
   margin: 5px 0;
   padding: 0;
-}
+} */
 .disarmed {
-  color: red;
+  background-color: red;
 }
-.arned {
-  color: green;
+.armed {
+  background-color: green;
 }
 button {
   border: none;
@@ -79,9 +101,35 @@ button {
   display: inline-block;
   font-size: 16px;
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 button:hover {
   background-color: #97bbb9; /* Green */
   color: black;
+}
+
+.map {
+  width: 30%;
+  height: 500px;
+  flex-shrink: 1;
+}
+.hud {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 60%;
+  /* height: 500px; */
+  flex-wrap: wrap;
+  /* margin: 2em; */
+  position: relative;
+}
+.hub {
+  background-color: #5abfa6;
+  display: flex;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  justify-content: center;
+  align-items: center;
 }
