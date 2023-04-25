@@ -22,6 +22,8 @@ html(lang='en')
         .hub
             .map
                 #map 
+                .map_options
+                    button.centering_map(onclick="centerMap()") center
             .hud 
                 span#altimeter 
                 span#attitude
@@ -59,7 +61,7 @@ html(lang='en')
 
 script.
     var map;
-
+    var droneMarker;
     function initMap() {
 
         // The location of Geeksforgeeks office
@@ -85,8 +87,21 @@ script.
             return;
         }
         var location = new  google.maps.LatLng(lat,long)
-        map.setCenter(location)
+        oldMarker = droneMarker;
+        droneMarker = new google.maps.Marker({
+            label:"D",
+            position: location,
+        })
+        droneMarker.setMap(map)
+        oldMarker?.setMap(null)
 
+    }
+    function centerMap(){
+        if(!droneMarker){
+            setTimeout(centerMap, 1)
+            return;
+        }
+        map.setCenter(droneMarker.getPosition())
     }
 
     $(document).ready(function () {

@@ -4,22 +4,11 @@ html {
 }
 
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   color: #333;
   background-color: #dee5e5;
   margin: 0em 10em;
   padding: 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#map {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
 }
 
 .camera {
@@ -34,7 +23,6 @@ body {
 
 .status {
   background-color: #17b890;
-  width: 100%;
 }
 
 .status_body {
@@ -74,18 +62,8 @@ body {
   flex-direction: column;
   padding: 2em;
   background-color: #3b9c88;
-  width: 100%;
-}
-/* ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
-li {
-  margin: 5px 0;
-  padding: 0;
-} */
 .disarmed {
   background-color: red;
 }
@@ -102,6 +80,9 @@ button {
   font-size: 16px;
   transition: all 0.3s;
   cursor: pointer;
+  background-color: #333;
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
@@ -114,6 +95,28 @@ button:hover {
   height: 500px;
   flex-shrink: 1;
 }
+#map {
+  margin: 0;
+  padding: 0;
+  height: 30em;
+  width: 30em;
+}
+
+.map_options {
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.hub {
+  background-color: #5abfa6;
+  display: flex;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+}
 .hud {
   display: flex;
   justify-content: center;
@@ -123,13 +126,4 @@ button:hover {
   flex-wrap: wrap;
   /* margin: 2em; */
   position: relative;
-}
-.hub {
-  background-color: #5abfa6;
-  display: flex;
-  width: 100%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  justify-content: center;
-  align-items: center;
 }
