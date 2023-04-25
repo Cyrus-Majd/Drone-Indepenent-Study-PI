@@ -23,6 +23,7 @@ body {
 
 .status {
   background-color: #17b890;
+  padding: 2em;
 }
 
 .status_body {

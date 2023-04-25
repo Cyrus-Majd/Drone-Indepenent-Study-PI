@@ -37,19 +37,22 @@ html(lang='en')
                 ul(class='drone_info')
                     li.drone_name Name: 
                     li.drone_gps Gps: 
-                    li.drone_battery Battery:
-                    li.drone_heart Last Heartbeat:
                     li.drone_armable Armable:
                     li.drone_status System Status: 
                     li.drone_mode Mode: 
+                ul(class='drone_info')
+                    li.drone_ping ping: 
+                    li.drone_heart Last Heartbeat:
+                    li.drone_battery Battery:
+                    li.drone_arm Armed:
+                    li.drone_home Home Location:
+
                 ul(class='drone_direction')
                     li.drone_head Heading: 
                     li.drone_att Attitude: 
                     li.drone_vel Velocity:
                     li.drone_air_speed Air Speed: 
                     li.drone_ground_speed Ground Speed:
-                    li.drone_arm Armed:
-                    li.drone_home Home Location:
         .commands
             h2 Drone Commands
             .command_buttons
@@ -124,6 +127,7 @@ script.
         var altimeter = $.flightIndicator('#altimeter', 'altimeter',{size : 300,showBox: true,img_directory : 'public/img/'});
         function fetchData() {
             $.get('/drone/api/json', function (data) {
+
                 editDroneInfo(data.info)
                 editDroneDirection(data.direction)
                 //Need to parse gps data somehow?
@@ -132,8 +136,11 @@ script.
             });
         }
         function updateHUD(){
-            $.get("/drone/api/hud", function (data){
+            var then = new Date()
 
+            $.get("/drone/api/hud", function (data){
+                var now = new Date()
+                $('.drone_ping').text(`Ping: ${now - then}ms`)
                 indicator.setRoll(data.roll);			// Sets the roll of an attitude indicator
                 indicator.setPitch(data.pitch);			// Sets the pitch of an attitude indicator
                 indicator.setHeading(data.heading);		// Sets the heading of an heading indicator
