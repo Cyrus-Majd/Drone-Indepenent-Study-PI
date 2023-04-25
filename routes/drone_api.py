@@ -59,3 +59,16 @@ def json():
         },
     }
     return jsonify(data)
+
+
+@drone.post("/api/arm")
+def arm():
+    if vehicle.armed:
+        vehicle.disarm()
+    else:
+        vehicle.arm()
+    return jsonify(
+        {
+            "drone_arm": vehicle.armed,
+        }
+    )

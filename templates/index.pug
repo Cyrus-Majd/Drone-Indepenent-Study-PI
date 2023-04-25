@@ -5,31 +5,24 @@ html(lang='en')
         title Drone Webpage
         link(href="/public/css/styles.css" rel="stylesheet")
         script(src="https://code.jquery.com/jquery-3.6.0.min.js")
-        script(src="/public/scripts/drone.js" )
+
+
         script(src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyDOUOjCUfAoWjm7pAsSDnwqXgXPZeaylQY&callback=initMap&libraries=&v=weekly" async)
         link(href="/public/css/flightindicators.css" rel="stylesheet")
         script(src="/public/scripts/jquery.flightindicators.js" )
+        script(src="/public/scripts/drone.js" )
+        script(src="/public/scripts/map.js" )
+        script(src="/public/scripts/hud.js" )
 
     body
         .camera
             .camera_one
-                h1.camera_one Front Cam
+                h1 Front Cam
                 img#webcam(src= 'http://10.72.102.58:5000/front_feed', autoplay, muted, playsinline)
 
             .camera_two
-                h1.camera_one Bottom Cam
+                h1 Bottom Cam
                 img#webcam(src= 'http://10.72.102.58:5000/down_feed', autoplay, muted, playsinline)
-        .hub
-            .map
-                #map 
-                .map_options
-                    button.centering_map(onclick="centerMap()") center
-            .hud 
-                span#altimeter 
-                span#attitude
-                span#heading 
-                span#variometer 
-                span#airspeed 
         .status
             .status_head
                 h2 Drone State
@@ -53,6 +46,18 @@ html(lang='en')
                     li.drone_vel Velocity:
                     li.drone_air_speed Air Speed: 
                     li.drone_ground_speed Ground Speed:
+        .hub
+            .map
+                #map 
+                .map_options
+                    button.centering_map(onclick="centerMap()") center
+            .hud 
+                span#altimeter 
+                span#attitude
+                span#heading 
+                span#variometer 
+                span#airspeed 
+
         .commands
             h2 Drone Commands
             .command_buttons
@@ -63,102 +68,23 @@ html(lang='en')
 
 
 script.
-    var map;
-    var droneMarker;
-    function initMap() {
-
-        // The location of Geeksforgeeks office
-        const gfg_office = {
-        lat: 28.50231,
-        lng: 77.40548
-        };
-
-        // Create the map, centered at gfg_office
-        map = new google.maps.Map(
-            document.getElementById("map"), {
-            // Set the zoom of the map
-            zoom: 17.56,
-            center: gfg_office,
-            disableDefaultUI:true,
-
-            mapTypeId:google.maps.MapTypeId.SATELLITE
-        });
-
-    }
-    function updateMap(lat,long){
-        if(!google){
-            return;
-        }
-        var location = new  google.maps.LatLng(lat,long)
-        oldMarker = droneMarker;
-        droneMarker = new google.maps.Marker({
-            label:"D",
-            position: location,
-        })
-        droneMarker.setMap(map)
-        oldMarker?.setMap(null)
-
-    }
-    function centerMap(){
-        if(!droneMarker){
-            setTimeout(centerMap, 1)
-            return;
-        }
-        map.setCenter(droneMarker.getPosition())
-    }
 
     $(document).ready(function () {
-        var options = {
-            size : 300,				// Sets the size in pixels of the indicator (square)
-            roll : 0,				// Roll angle in degrees for an attitude indicator
-            pitch : 0,				// Pitch angle in degrees for an attitude indicator
-            heading: 0,				// Heading angle in degrees for an heading indicator
-            vario: 0,				// Variometer in 1000 feets/min for the variometer indicator
-            airspeed: 0,			// Air speed in knots for an air speed indicator
-            altitude: 0,			// Altitude in feets for an altimeter indicator
-            pressure: 1000,			// Pressure in hPa for an altimeter indicator
-            showBox : true,			// Sets if the outer squared box is visible or not (true or false)
-            img_directory : 'public/img/'	// The directory where the images are saved to
-        }
-        var indicator = $.flightIndicator('#attitude', 'attitude', options);
-        var heading = $.flightIndicator('#heading', 'heading', {size : 300,heading:150, showBox:true,img_directory : 'public/img/'});
-        var variometer = $.flightIndicator('#variometer', 'variometer', {size : 300,vario:-5, showBox:true,img_directory : 'public/img/'});
-        var airspeed = $.flightIndicator('#airspeed', 'airspeed', {size : 300,showBox: true,img_directory : 'public/img/'});
-        var altimeter = $.flightIndicator('#altimeter', 'altimeter',{size : 300,showBox: true,img_directory : 'public/img/'});
+
         function fetchData() {
             $.get('/drone/api/json', function (data) {
 
                 editDroneInfo(data.info)
                 editDroneDirection(data.direction)
-                //Need to parse gps data somehow?
                 updateMap(data.info.drone_gps.lat, data.info.drone_gps.long)
+
+
                 setTimeout(fetchData, 2000)
             });
         }
-        function updateHUD(){
-            var then = new Date()
 
-            $.get("/drone/api/hud", function (data){
-                var now = new Date()
-                $('.drone_ping').text(`Ping: ${now - then}ms`)
-                indicator.setRoll(data.roll);			// Sets the roll of an attitude indicator
-                indicator.setPitch(data.pitch);			// Sets the pitch of an attitude indicator
-                indicator.setHeading(data.heading);		// Sets the heading of an heading indicator
-                indicator.setVario(data.vario);			// Sets the climb speed of an variometer indicator
-                indicator.setAirSpeed(data.speed);		// Sets the speed of an airspeed indicator
-                indicator.setAltitude(data.altitude);	// Sets the altitude of an altimeter indicator
-                airspeed.setAirSpeed(data.speed);
-                heading.setHeading(data.heading);
-                variometer.setVario(data.vario);
-                altimeter.setAltitude(data.altitude)
 
-                setTimeout(updateHUD, 200)
-
-            })
-    }
-
-    fetchData()
-    updateHUD()
+        fetchData()
 
     });
 

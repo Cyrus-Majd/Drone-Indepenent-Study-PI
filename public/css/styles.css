@@ -16,48 +16,55 @@ body {
   align-items: center;
   justify-content: center;
   gap: 3em;
-  width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #9dc5bb;
+  padding: 2em;
+}
+.camera img {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.status {
+  background-color: #7cc2b1;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.status {
-  background-color: #17b890;
-  padding: 2em;
+.status_head {
+  margin-bottom: 10px;
+}
+
+.status_head h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin: 0;
 }
 
 .status_body {
   display: flex;
-  justify-content: space-evenly;
-  flex-grow: 1;
-  gap: 3em;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.drone_info,
+
+.drone_info {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.drone_info li {
+  margin-bottom: 10px;
+}
+
 .drone_direction {
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
-.drone_info li,
 .drone_direction li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 16px;
-  border-bottom: 1px solid #ccc;
-  font-size: 14px;
+  margin-bottom: 10px;
 }
 
-.drone_info li:first-child,
-.drone_direction li:first-child {
-  border-top: 1px solid #ccc;
-}
-
-.drone_info li:last-child,
-.drone_direction li:last-child {
-  border-bottom: none;
-}
 .commands {
   display: flex;
   flex-direction: column;
@@ -92,15 +99,14 @@ button:hover {
 }
 
 .map {
-  width: 30%;
-  height: 500px;
   flex-shrink: 1;
 }
 #map {
   margin: 0;
   padding: 0;
-  height: 30em;
-  width: 30em;
+  height: 40em;
+  width: 40em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .map_options {
@@ -112,19 +118,16 @@ button:hover {
 .hub {
   background-color: #5abfa6;
   display: flex;
-  width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   justify-content: center;
   align-items: center;
   height: fit-content;
+  padding: 2em;
 }
 .hud {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 60%;
-  /* height: 500px; */
   flex-wrap: wrap;
-  /* margin: 2em; */
   position: relative;
 }
