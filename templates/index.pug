@@ -51,6 +51,9 @@ html(lang='en')
                 #map 
                 .map_options
                     button.centering_map(onclick="centerMap()") center
+                    label(for="radius") Radius
+                    input.radius(placeholder="radius" type="number" min="2" max="100" value="2")
+
             .hud 
                 span#altimeter 
                 span#attitude
@@ -62,6 +65,7 @@ html(lang='en')
             h2 Drone Commands
             .command_buttons
                 button.arm(onclick="disarmOrArm()")
+
 
 
 

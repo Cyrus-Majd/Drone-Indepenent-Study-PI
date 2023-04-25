@@ -19,8 +19,29 @@ function centerMap() {
     }
     map.setCenter(droneMarker.getPosition())
 }
+function setSearchArea(event) {
+    var radius = $(".radius").val()
+    console.log(radius)
+
+    var lat = event.latLng.lat()
+    var long = event.latLng.lng()
+    console.log(`lat ${lat} long ${long}`)
+    oldsearch = searchMarker;
+    searchMarker = new google.maps.Marker({
+        label: "Search",
+        animation: "DROP",
+        map: map,
+        position: event.latLng,
+    })
+    // searchMarker.setMap(map)
+    oldsearch?.setMap(null)
+}
+
+
 var map;
 var droneMarker;
+var searchMarker;
+
 function initMap() {
 
     // The location of Geeksforgeeks office
@@ -36,8 +57,7 @@ function initMap() {
         zoom: 17.56,
         center: gfg_office,
         disableDefaultUI: true,
-
         mapTypeId: google.maps.MapTypeId.SATELLITE
     });
-
+    map.addListener("click", setSearchArea)
 }
