@@ -29,20 +29,20 @@ def move_point(lat, lon, bearing, distance):
 
 def square_search(center_lat, center_long, max_radius, visibility_radius):
     pattern = [(center_lat, center_long)]
-
+    visibility_diameter = 2* visibility_radius
     visibility_multiplier = 1
-    max_range_in_terms_of_VR = max_radius / visibility_radius
+    max_range_in_terms_of_VR = max_radius / visibility_diameter
     current_lat = center_lat
     current_long = center_long
 
     while max_range_in_terms_of_VR > visibility_multiplier / 2:
         current_lat, current_long = move_point(
-            current_lat, current_long, 0, visibility_multiplier * visibility_radius
+            current_lat, current_long, 0, visibility_multiplier * visibility_diameter
         )
         pattern.append((current_lat, current_long))
 
         current_lat, current_long = move_point(
-            current_lat, current_long, 270, visibility_multiplier * visibility_radius
+            current_lat, current_long, 270, visibility_multiplier * visibility_diameter
         )
         pattern.append((current_lat, current_long))
 
@@ -61,3 +61,16 @@ def square_search(center_lat, center_long, max_radius, visibility_radius):
         visibility_multiplier += 1
 
     return pattern
+
+"""
+takes the camera FOV angle (in degrees) and the drone's current altitude (in meters) and returns the visiblity radius of
+the camera(in meters).
+
+"""
+def get_visibility_radius(camera_angle, altitude):
+    theta = math.radians(camera_angle/2)
+    return altitude * math.tan(theta)
+
+
+
+print(get_visibility_radius(90, 1))
