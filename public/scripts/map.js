@@ -79,6 +79,19 @@ function mapPath(pathCoordinates) {
 
 }
 
+function conductSquareSearch() {
+    if (!searchMarker) {
+        alert("Please select a search area!")
+        return;
+    }
+}
+function clearMarkers() {
+    searchMarker?.setMap(null);
+    searchMarker?.square.setMap(null)
+    searchMarker = null;
+}
+
+
 
 function initMap() {
 

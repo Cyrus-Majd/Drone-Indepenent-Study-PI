@@ -57,6 +57,8 @@ html(lang='en')
                     button.centering_map(onclick="centerMap()") center
                     label(for="radius") Radius
                     input.radius(placeholder="radius" type="number" min="10" max="1000" value="10")
+                    button.clear(onclick="clearMarkers()") Clear
+
 
             .hud 
                 span#altimeter 
@@ -69,6 +71,9 @@ html(lang='en')
             h2 Drone Commands
             .command_buttons
                 button.arm(onclick="disarmOrArm()")
+                button.square_search(onclick="conductSquareSearch()") Linear Search
+
+
 
 
 
