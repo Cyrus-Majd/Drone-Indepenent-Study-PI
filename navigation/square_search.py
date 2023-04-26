@@ -70,7 +70,3 @@ the camera(in meters).
 def get_visibility_radius(camera_angle, altitude):
     theta = math.radians(camera_angle/2)
     return altitude * math.tan(theta)
-
-
-
-print(get_visibility_radius(90, 1))
