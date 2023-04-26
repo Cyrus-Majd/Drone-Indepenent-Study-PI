@@ -1,6 +1,6 @@
 from dronekit import connect
 import os
-from flask import Blueprint, jsonify
+from flask import Blueprint, Response, jsonify, request
 from dotenv import load_dotenv
 
 load_dotenv(".env")
@@ -72,3 +72,14 @@ def arm():
             "drone_arm": vehicle.armed,
         }
     )
+
+
+@drone.post("/api/search_area")
+def search():
+    if not request.is_json:
+        return Response(status=400)
+    content = request.json
+
+    lat = content.lat
+    long = content.long
+    radius = content.radius
