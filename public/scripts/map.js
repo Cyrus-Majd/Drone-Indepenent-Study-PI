@@ -58,13 +58,15 @@ function setSearchArea(event) {
         fillOpacity: 0.35,
         map: map
     });
-    searchMarker.square = square
-    searchMarker.square.radius = radius;
-    searchMarker.square.alt = alt
+    searchMarker.currentSearch = square
+    searchMarker.currentSearch.radius = radius;
+    searchMarker.currentSearch.alt = alt
 
     // searchMarker.setMap(map)
     oldsearch?.setMap(null)
-    oldsearch?.square.setMap(null)
+    oldsearch?.currentSearch.setMap(null)
+    oldsearch?.currentSearch?.path.setMap(null)
+
 }
 
 function mapPath(pathCoordinates, type) {
@@ -80,7 +82,7 @@ function mapPath(pathCoordinates, type) {
         strokeWeight: 2,
         map: map
     });
-    searchMarker.path = path
+    searchMarker.currentSearch.path = path
 
 }
 
@@ -90,8 +92,8 @@ async function SquareSearch() {
         return;
     }
 
-    var radius = searchMarker.square.radius;
-    var alt = searchMarker.square.alt
+    var radius = searchMarker.currentSearch.radius;
+    var alt = searchMarker.currentSearch.alt
 
     var latLong = searchMarker.getPosition();
     var lat = latLong.lat()
@@ -119,8 +121,8 @@ async function SquareSearch() {
 }
 function clearMarkers() {
     searchMarker?.setMap(null);
-    searchMarker?.square.setMap(null)
-    searchMarker?.path.setMap(null)
+    searchMarker?.currentSearch.setMap(null)
+    searchMarker?.currentSearch.path.setMap(null)
     searchMarker = null;
 }
 
