@@ -74,6 +74,7 @@ function mapPath(pathCoordinates, type) {
     if (type == "squaresearch") {
         color = '#FF00FF'
     }
+    var oldpath = searchMarker.currentSearch.path
     var path = new google.maps.Polyline({
         path: pathCoordinates,
         geodesic: true,
@@ -83,6 +84,9 @@ function mapPath(pathCoordinates, type) {
         map: map
     });
     searchMarker.currentSearch.path = path
+    if (oldpath) {
+        oldpath.setMap(null)
+    }
 
 }
 
