@@ -49,12 +49,12 @@ def square_search(center_lat, center_long, max_radius, visibility_radius):
         visibility_multiplier += 1
 
         current_lat, current_long = move_point(
-            current_lat, current_long, 180, visibility_multiplier * visibility_radius
+            current_lat, current_long, 180, visibility_multiplier * visibility_diameter
         )
         pattern.append((current_lat, current_long))
 
         current_lat, current_long = move_point(
-            current_lat, current_long, 90, visibility_multiplier * visibility_radius
+            current_lat, current_long, 90, visibility_multiplier * visibility_diameter
         )
         pattern.append((current_lat, current_long))
 
