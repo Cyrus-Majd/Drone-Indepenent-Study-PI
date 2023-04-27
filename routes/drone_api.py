@@ -55,7 +55,7 @@ def square():
     lat = content.get("lat")
     long = content.get("long")
     radius = content.get("radius")
-    alt = vehicle.location.global_frame.alt
+    alt = content.get("alt")
 
     visibility_radius = get_visibility_radius(90, alt)
 

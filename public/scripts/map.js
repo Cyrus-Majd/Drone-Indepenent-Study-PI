@@ -26,7 +26,7 @@ function centerMap() {
 }
 function setSearchArea(event) {
     var radius = parseInt($(".radius").val())
-    console.log(radius)
+    var alt = parseInt($(".alt").val())
 
     var lat = event.latLng.lat()
     var long = event.latLng.lng()
@@ -60,6 +60,7 @@ function setSearchArea(event) {
     });
     searchMarker.square = square
     searchMarker.square.radius = radius;
+    searchMarker.square.alt = alt
 
     // searchMarker.setMap(map)
     oldsearch?.setMap(null)
@@ -90,13 +91,16 @@ async function SquareSearch() {
     }
 
     var radius = searchMarker.square.radius;
+    var alt = searchMarker.square.alt
+
     var latLong = searchMarker.getPosition();
     var lat = latLong.lat()
     var long = latLong.lng()
     var data = {
         "radius": radius,
         "lat": lat,
-        "long": long
+        "long": long,
+        "alt": alt
     }
     var response = await fetch('/drone/api/search/square', {
         'method': "post",
