@@ -1,4 +1,5 @@
 # THIS WILL HAVE THE CURRENT DRONE STATE
+from dronekit import Vehicle, VehicleMode
 
 
 def getJSONState(vehicle):
@@ -40,6 +41,11 @@ def getHud(vehicle):
         "altitude": vehicle.location.global_frame.alt,
     }
     return data
+
+
+def changeMode(vehicle: Vehicle, mode: str):
+    print("vehicle mode set to %s", mode)
+    vehicle.mode = mode
 
 
 def getAtt(vehicle):

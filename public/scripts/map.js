@@ -59,35 +59,64 @@ function setSearchArea(event) {
         map: map
     });
     searchMarker.square = square
-
+    searchMarker.square.radius = radius;
 
     // searchMarker.setMap(map)
     oldsearch?.setMap(null)
     oldsearch?.square.setMap(null)
 }
 
-function mapPath(pathCoordinates) {
-
+function mapPath(pathCoordinates, type) {
+    var color = '#FF0000';
+    if (type == "squaresearch") {
+        color = '#FF00FF'
+    }
     var path = new google.maps.Polyline({
         path: pathCoordinates,
         geodesic: true,
-        strokeColor: '#FF0000',
+        strokeColor: color,
         strokeOpacity: 1.0,
         strokeWeight: 2,
         map: map
     });
+    searchMarker.path = path
 
 }
 
-function conductSquareSearch() {
+async function SquareSearch() {
     if (!searchMarker) {
         alert("Please select a search area!")
         return;
     }
+
+    var radius = searchMarker.square.radius;
+    var latLong = searchMarker.getPosition();
+    var lat = latLong.lat()
+    var long = latLong.lng()
+    var data = {
+        "radius": radius,
+        "lat": lat,
+        "long": long
+    }
+    var response = await fetch('/drone/api/search/square', {
+        'method': "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    var res = await response.json();
+    console.log(res)
+    var path = parsePath(res)
+    console.log(path)
+    mapPath(path, "squaresearch")
+
+
 }
 function clearMarkers() {
     searchMarker?.setMap(null);
     searchMarker?.square.setMap(null)
+    searchMarker?.path.setMap(null)
     searchMarker = null;
 }
 
@@ -111,23 +140,33 @@ function initMap() {
         mapTypeId: google.maps.MapTypeId.SATELLITE
     });
     map.addListener("click", setSearchArea)
-    mapPath([{ "lat": 40.52201309936123, "lng": -74.46292879108148 },
-    { "lat": 40.52201309936063, "lng": -74.46294060858764 },
-    { "lat": 40.52199513305495, "lng": -74.46294060858764 },
-    { "lat": 40.521995133052535, "lng": -74.46291697358163 },
-    { "lat": 40.522022082511064, "lng": -74.46291697358163 },
-    { "lat": 40.52202208250565, "lng": -74.4629524261049 },
-    { "lat": 40.52198614989429, "lng": -74.4629524261049 },
-    { "lat": 40.521986149884654, "lng": -74.46290515609921 },
-    { "lat": 40.52203106564886, "lng": -74.46290515609921 },
-    { "lat": 40.52203106563382, "lng": -74.46296424364593 },
-    { "lat": 40.52197716671678, "lng": -74.46296424364594 },
-    { "lat": 40.521977166695116, "lng": -74.46289333864692 },
-    { "lat": 40.522040048765, "lng": -74.46289333864692 },
-    { "lat": 40.522040048735505, "lng": -74.4629760612234 },
-    { "lat": 40.521968183512776, "lng": -74.4629760612234 },
-    { "lat": 40.52196818347426, "lng": -74.46288152123736 },
-    { "lat": 40.52204903184983, "lng": -74.46288152123736 },
-    { "lat": 40.522049031801075, "lng": -74.46298787884993 },
-    { "lat": 40.52195920027267, "lng": -74.46298787884993 }])
+    // mapPath([{ "lat": 40.52201309936123, "lng": -74.46292879108148 },
+    // { "lat": 40.52201309936063, "lng": -74.46294060858764 },
+    // { "lat": 40.52199513305495, "lng": -74.46294060858764 },
+    // { "lat": 40.521995133052535, "lng": -74.46291697358163 },
+    // { "lat": 40.522022082511064, "lng": -74.46291697358163 },
+    // { "lat": 40.52202208250565, "lng": -74.4629524261049 },
+    // { "lat": 40.52198614989429, "lng": -74.4629524261049 },
+    // { "lat": 40.521986149884654, "lng": -74.46290515609921 },
+    // { "lat": 40.52203106564886, "lng": -74.46290515609921 },
+    // { "lat": 40.52203106563382, "lng": -74.46296424364593 },
+    // { "lat": 40.52197716671678, "lng": -74.46296424364594 },
+    // { "lat": 40.521977166695116, "lng": -74.46289333864692 },
+    // { "lat": 40.522040048765, "lng": -74.46289333864692 },
+    // { "lat": 40.522040048735505, "lng": -74.4629760612234 },
+    // { "lat": 40.521968183512776, "lng": -74.4629760612234 },
+    // { "lat": 40.52196818347426, "lng": -74.46288152123736 },
+    // { "lat": 40.52204903184983, "lng": -74.46288152123736 },
+    // { "lat": 40.522049031801075, "lng": -74.46298787884993 },
+    // { "lat": 40.52195920027267, "lng": -74.46298787884993 }])
+}
+
+
+function parsePath(path) {
+    var newpath = [];
+    for (let i = 0; i < path.length; i++) {
+        var waypointArray = path[i];
+        newpath.push({ 'lat': waypointArray[0], "lng": waypointArray[1] })
+    }
+    return newpath
 }

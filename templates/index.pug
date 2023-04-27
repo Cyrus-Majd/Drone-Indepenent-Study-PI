@@ -56,7 +56,7 @@ html(lang='en')
                 .map_options
                     button.centering_map(onclick="centerMap()") center
                     label(for="radius") Radius
-                    input.radius(placeholder="radius" type="number" min="10" max="1000" value="10")
+                    input.radius(placeholder="radius" type="number" min="20" max="4000" value="50")
                     button.clear(onclick="clearMarkers()") Clear
 
 
@@ -71,7 +71,14 @@ html(lang='en')
             h2 Drone Commands
             .command_buttons
                 button.arm(onclick="disarmOrArm()")
-                button.square_search(onclick="conductSquareSearch()") Linear Search
+                button.square_search(onclick="SquareSearch()") Sqaure Search
+                label(for="drone_select_mode") Select Mode:
+                select(name="mode" id="drone_select_mode" onchange="setMode(this.value)")
+                    option(value="NULL") 
+                    option(value="AUTO") AUTO
+                    option(value="GUIDED") GUIDED
+                    option(value="STABILIZE") STABILIZE
+
 
 
 
