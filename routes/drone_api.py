@@ -1,9 +1,10 @@
-from dronekit import connect
+from dronekit import connect, VehicleMode
 import os
 from flask import Blueprint, Response, jsonify, request
 from dotenv import load_dotenv
 
 from drone.drone import getHud, getJSONState
+from navigation.square_search import get_visibility_radius, square_search
 
 load_dotenv(".env")
 
@@ -45,13 +46,45 @@ def arm():
     )
 
 
-@drone.post("/api/search_area")
-def search():
+@drone.post("/api/search/square")
+def square():
     if not request.is_json:
         return Response(status=400)
     content = request.json
 
-    lat = content.lat
-    long = content.long
-    radius = content.radius
-    att = vehicle.location.global_frame.alt
+    lat = content.get("lat")
+    long = content.get("long")
+    radius = content.get("radius")
+    alt = vehicle.location.global_frame.alt
+
+    visibility_radius = get_visibility_radius(90, alt)
+
+    path = square_search(lat, long, radius, visibility_radius)
+    print(path)
+    return jsonify(path)
+
+
+@drone.post("/api/mode")
+def set_mode():
+    if not request.is_json:
+        return Response(status=400)
+    content = request.json
+
+    mode = content.get("mode")
+    try:
+        vehicle.wait_for_mode(mode, timeout=10)
+        res = {"success": True, "mode": vehicle.mode.name}
+        return jsonify(res)
+    except:
+        res = {"success": False, "mode": vehicle.mode.name}
+        return jsonify(res)
+
+
+@drone.post("/api/takeoff")
+def takeoff():
+    if not vehicle.is_armable:
+        return jsonify({"success": False})
+    vehicle.wait_for_mode("GUIDED", timeout=10)
+    vehicle.arm(wait=True)
+    vehicle.wait_simple_takeoff(alt=50, timeout=30)
+    return jsonify({"success": True})

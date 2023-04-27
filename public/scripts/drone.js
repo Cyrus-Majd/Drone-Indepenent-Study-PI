@@ -6,6 +6,7 @@ function editDroneInfo(info) {
     $('.drone_armable').text(`Armable: ${info.drone_armable}`)
     $('.drone_status').text(`System Status: ${info.drone_status}`)
     $('.drone_mode').text(`Mode: ${info.drone_mode}`)
+    editDroneMode(info.drone_mode)
 }
 
 function editDroneDirection(info) {
@@ -25,6 +26,7 @@ function editDroneDirection(info) {
 }
 
 async function disarmOrArm() {
+    $('.arm').addClass("disabled")
     var response = await fetch('/drone/api/arm', {
         'method': "post",
         headers: {
@@ -32,9 +34,33 @@ async function disarmOrArm() {
         },
     })
     var res = await response.json();
+    $('.arm').removeClass("disabled")
     if (res.armed) {
         $('.arm').text("Disarm").removeClass("armed").addClass("disarmed")
     } else {
         $('.arm').text("Arm").removeClass("disarmed").addClass("armed")
     }
+}
+
+function editDroneMode(mode) {
+
+}
+
+async function setMode(mode) {
+    if (mode == "NULL") {
+        return;
+    }
+    data = {
+        "mode": mode
+    }
+    var response = await fetch('/drone/api/mode', {
+        'method': "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    var res = await response.json();
+    console.log(res)
+
 }
