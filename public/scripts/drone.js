@@ -62,5 +62,6 @@ async function setMode(mode) {
     })
     var res = await response.json();
     console.log(res)
+    $('#drone_select_mode').val(res.mode)
 
 }

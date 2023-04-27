@@ -1,3 +1,4 @@
+
 doctype
 html(lang='en')
     head
@@ -5,13 +6,14 @@ html(lang='en')
         title Drone Webpage
         link(href="/public/css/styles.css" rel="stylesheet")
         script(src="https://code.jquery.com/jquery-3.6.0.min.js")
-
-
         script(src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyDOUOjCUfAoWjm7pAsSDnwqXgXPZeaylQY&callback=initMap&libraries=&v=weekly" async)
-        script(src="/public/scripts/drone.js" )
 
-        script(src="https://docs.opencv.org/master/opencv.js" onload="" async)
 
+        script(src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady()" async)
+
+
+
+        script(src="/public/scripts/opencv.js" )
         link(href="/public/css/flightindicators.css" rel="stylesheet")
         script(src="/public/scripts/jquery.flightindicators.js" )
         script(src="/public/scripts/drone.js" )
@@ -22,11 +24,11 @@ html(lang='en')
         .camera
             .camera_one
                 h1 Front Cam
-                img#webcam(src= 'http://10.72.102.58:5000/front_feed', autoplay, muted, playsinline)
+                img#webcam_front(src= 'http://10.72.102.58:5000/front_feed', autoplay, muted, playsinline)
 
             .camera_two
                 h1 Bottom Cam
-                img#webcam(src= 'http://10.72.102.58:5000/down_feed', autoplay, muted, playsinline)
+                img#webcam_down(src= 'http://10.72.102.58:5000/down_feed', autoplay, muted, playsinline)
         .status
             .status_head
                 h2 Drone State
@@ -54,10 +56,10 @@ html(lang='en')
             .map
                 #map 
                 .map_options
-                    button.centering_map(onclick="centerMap()") center
-                    label(for="radius") Radius
+                    button.centering_map(onclick="centerMap()") Center
+                    label(for="radius") Radius:
                     input.radius(placeholder="radius" type="number" min="20" max="4000" value="50")
-                    label(for="alt") Alt
+                    label(for="alt") Alt:
                     input.alt(placeholder="alt" type="number" min="50" max="4000" value="50")
                     button.clear(onclick="clearMarkers()") Clear
 
@@ -80,7 +82,10 @@ html(lang='en')
                     option(value="AUTO") AUTO
                     option(value="GUIDED") GUIDED
                     option(value="STABILIZE") STABILIZE
-
+        .opencv
+            h2 Drone Capture
+            .captures
+                canvas.outputCanvas
 
 
 

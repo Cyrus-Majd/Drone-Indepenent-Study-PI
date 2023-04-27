@@ -12,14 +12,16 @@ drone = Blueprint("drone", __name__, url_prefix="/drone")
 
 
 def getIP():
-    if os.getenv("DEV"):
+    if bool(os.getenv("DEV")):
         return "tcp:127.0.0.1:5760"
     else:
         return os.getenv("DRONE_IP")
 
-
-vehicle = connect(getIP(), heartbeat_timeout=0)
-
+try:
+    
+    vehicle = connect(getIP(), heartbeat_timeout=0)
+except:
+    print("unable to connect to vehicle")
 
 @drone.route("/api/hud")
 def hud():

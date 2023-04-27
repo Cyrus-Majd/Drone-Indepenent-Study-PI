@@ -166,3 +166,24 @@ input:disabled {
   flex-wrap: wrap;
   position: relative;
 }
+label {
+  display: inline-block;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+select#drone_select_mode {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  color: #333;
+}
+
+select#drone_select_mode option[value="NULL"] {
+  display: none;
+}
