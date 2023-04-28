@@ -85,9 +85,11 @@ def set_mode():
 
 @drone.post("/api/takeoff")
 def takeoff():
+    target_alt = 25
     if not vehicle.is_armable:
         return jsonify({"success": False})
     vehicle.wait_for_mode("GUIDED", timeout=10)
     vehicle.arm(wait=True)
-    vehicle.wait_simple_takeoff(alt=50, timeout=30)
+    vehicle.wait_simple_takeoff(alt=target_alt, timeout=30)
+    vehicle.wait_for_alt(alt=target_alt)
     return jsonify({"success": True})
