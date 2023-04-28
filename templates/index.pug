@@ -24,11 +24,11 @@ html(lang='en')
         .camera
             .camera_one
                 h1 Front Cam
-                //- img#webcam_front(src= '/front_feed', autoplay, muted, playsinline, async)
+                img#webcam_front.webcam(src= '/front_feed', autoplay, muted, playsinline, async)
 
             .camera_two
                 h1 Bottom Cam
-                //- img#webcam_down(src= '/down_feed', autoplay, muted, playsinline, async)
+                img#webcam_down.webcam(src= '/down_feed', autoplay, muted, playsinline, async)
         .status
             .status_head
                 h2 Drone State
@@ -85,6 +85,14 @@ html(lang='en')
                     option(value="AUTO") AUTO
                     option(value="GUIDED") GUIDED
                     option(value="STABILIZE") STABILIZE
+                    option(value="LAND") LAND
+                    option(value="RTL") Return to Takeoff 
+                    option(value="SMARTRTL") Smart Return to Takeoff 
+                    option(value="SYSID") Special diagnostic/modeling mode
+
+
+
+
         .opencv
             h2 Drone Capture
             .captures

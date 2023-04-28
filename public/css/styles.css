@@ -20,8 +20,10 @@ body {
   background-color: #9dc5bb;
   padding: 2em;
 }
-.camera img {
+.webcam {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  height: auto;
 }
 .status {
   background-color: #7cc2b1;
