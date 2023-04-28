@@ -12,6 +12,7 @@ import os
 from dotenv import load_dotenv
 
 from routes import drone_api
+import threading
 
 load_dotenv(".env")
 
@@ -35,7 +36,6 @@ app.register_blueprint(drone_api.drone)
 #             ret, buffer = cv2.imencode(".jpg", frame)
 #             frame = buffer.tobytes()
 #             yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
-import threading
 
 camera_forward = cv2.VideoCapture(0)
 camera_down = cv2.VideoCapture(1)
@@ -82,23 +82,6 @@ def start_camera_threads():
     down_thread = threading.Thread(target=gen_frames, args=(camera_down,))
     forward_thread.start()
     down_thread.start()
-
-
-# @app.route("/front_feed")
-# def front_feed():
-#     print("Handling front_feed request", flush=True)
-#     print(request.url)
-#     return Response(
-#         gen_frames(camera_forward), mimetype="multipart/x-mixed-replace; boundary=frame"
-#     )
-
-
-# @app.route("/down_feed")
-# def down_feed():
-#     print(request.url)
-#     return Response(
-#         gen_frames(camera_down), mimetype="multipart/x-mixed-replace; boundary=frame"
-#     )
 
 
 @app.route("/public/<path:path>")
