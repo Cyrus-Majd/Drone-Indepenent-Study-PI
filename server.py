@@ -1,5 +1,12 @@
+from flask import (
+    Flask,
+    Response,
+    render_template,
+    request,
+    send_from_directory,
+    send_file,
+)
 
-from flask import Flask, Response, render_template, request, send_from_directory, send_file
 import cv2
 import os
 from dotenv import load_dotenv
@@ -30,7 +37,6 @@ def gen_frames(camera):
             yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
 
 
-
 @app.route("/")
 def index():
     return render_template("index.pug")
@@ -57,13 +63,14 @@ def down_feed():
 def public(path):
     return send_from_directory("public", path)
 
+
 @app.route("/current_image")
-def current_image(camera = "down"):
+def current_image(camera="down"):
     cam = camera_forward if camera == "front" else camera_down
     success, frame = camera.read()
     if success:
-        return send_file(cam.imencode('.jpg',frame))
+        return send_file(cam.imencode(".jpg", frame))
 
 
 if __name__ == "__main__":
-    app.run(host=os.getenv("HOST"), port=os.getenv("PORT"), debug=False)
+    app.run(host=os.getenv("HOST"), port=os.getenv("PORT"), debug=False, threaded=True)

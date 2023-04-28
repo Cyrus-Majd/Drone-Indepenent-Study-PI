@@ -24,11 +24,11 @@ html(lang='en')
         .camera
             .camera_one
                 h1 Front Cam
-                img#webcam_front(src= 'http://10.72.102.58:5000/front_feed', autoplay, muted, playsinline)
+                //- img#webcam_front(src= '/front_feed', autoplay, muted, playsinline, async)
 
             .camera_two
                 h1 Bottom Cam
-                img#webcam_down(src= 'http://10.72.102.58:5000/down_feed', autoplay, muted, playsinline)
+                //- img#webcam_down(src= '/down_feed', autoplay, muted, playsinline, async)
         .status
             .status_head
                 h2 Drone State
@@ -75,7 +75,10 @@ html(lang='en')
             h2 Drone Commands
             .command_buttons
                 button.arm(onclick="disarmOrArm()")
+                button.home(onclick="homeDrone()") Home
                 button.square_search(onclick="SquareSearch()") Sqaure Search
+                button.linear_search(onclick="LinearSearch()") Linear Search
+
                 label(for="drone_select_mode") Select Mode:
                 select(name="mode" id="drone_select_mode" onchange="setMode(this.value)")
                     option(value="NULL") 
@@ -85,7 +88,7 @@ html(lang='en')
         .opencv
             h2 Drone Capture
             .captures
-                canvas.outputCanvas
+                canvas#outputCanvas
 
 
 

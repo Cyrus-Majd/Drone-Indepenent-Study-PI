@@ -65,7 +65,7 @@ function setSearchArea(event) {
     // searchMarker.setMap(map)
     oldsearch?.setMap(null)
     oldsearch?.currentSearch.setMap(null)
-    oldsearch?.currentSearch?.path.setMap(null)
+    oldsearch?.currentSearch?.path?.setMap(null)
 
 }
 
@@ -123,10 +123,43 @@ async function SquareSearch() {
 
 
 }
+
+async function LinearSearch() {
+    if (!searchMarker) {
+        alert("Please select a search area!")
+        return;
+    }
+
+    var radius = searchMarker.currentSearch.radius;
+    var alt = searchMarker.currentSearch.alt
+
+    var latLong = searchMarker.getPosition();
+    var lat = latLong.lat()
+    var long = latLong.lng()
+    var data = {
+        "radius": radius,
+        "lat": lat,
+        "long": long,
+        "alt": alt
+    }
+    var response = await fetch('/drone/api/search/linear', {
+        'method': "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    var res = await response.json();
+    console.log(res)
+    var path = parsePath(res)
+    console.log(path)
+    mapPath(path, "linearsearch")
+
+}
 function clearMarkers() {
     searchMarker?.setMap(null);
     searchMarker?.currentSearch.setMap(null)
-    searchMarker?.currentSearch.path.setMap(null)
+    searchMarker?.currentSearch?.path?.setMap(null)
     searchMarker = null;
 }
 

@@ -17,11 +17,12 @@ def getIP():
     else:
         return os.getenv("DRONE_IP")
 
+
 try:
-    
     vehicle = connect(getIP(), heartbeat_timeout=0)
 except:
     print("unable to connect to vehicle")
+
 
 @drone.route("/api/hud")
 def hud():
