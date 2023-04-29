@@ -19,6 +19,7 @@ def getIP():
 
 
 try:
+    print("trying to connect to ", getIP())
     vehicle = connect(getIP(), wait_ready=True, baud=57600)
     print("Connnect to drone!!")
 except:
