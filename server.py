@@ -6,7 +6,12 @@ from flask import (
     send_from_directory,
     send_file,
 )
+import logging;
 
+
+
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 import cv2
 import os
 from dotenv import load_dotenv
