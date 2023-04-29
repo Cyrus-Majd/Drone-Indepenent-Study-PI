@@ -19,7 +19,8 @@ def getIP():
 
 
 try:
-    vehicle = connect(getIP(), heartbeat_timeout=0)
+    vehicle = connect(getIP(), wait_ready=True, baud=57600)
+    print("Connnect to drone!!")
 except:
     print("unable to connect to vehicle")
 
