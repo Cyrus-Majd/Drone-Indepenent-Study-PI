@@ -6,7 +6,10 @@ from flask import (
     send_from_directory,
     send_file,
 )
-import logging;
+import logging
+from process_cv import VisionProcessing
+import requests
+import numpy as np
 
 
 
@@ -100,6 +103,38 @@ def current_image(camera="down"):
     success, frame = camera.read()
     if success:
         return send_file(cam.imencode(".jpg", frame))
+    
+def generate_cv_frames(camera):
+    while True:
+        # Read a frame from the camera
+        success, img = camera.read()
+        if not success:
+            break
+
+        # Process the frame
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        lower_blue = np.array([90,50,50])
+        upper_blue = np.array([150,255,255])
+        mask = cv2.inRange(hsv, lower_blue, upper_blue)
+        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        cv2.drawContours(img, contours, -1, (0, 255, 0), 2)
+
+        # Convert the processed frame to JPEG format
+        ret, buffer = cv2.imencode('.jpg', img)
+        frame = buffer.tobytes()
+
+        # Yield the frame in a chunked MJPEG stream
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        
+@app.route("/cv_feed")
+def cv_feed():
+    print("Handling cv_feed request", flush=True)
+    print(request.url)
+    return Response(
+        generate_cv_frames(camera_forward), mimetype='multipart/x-mixed-replace; boundary=frame'
+    )
+
 
 
 if __name__ == "__main__":

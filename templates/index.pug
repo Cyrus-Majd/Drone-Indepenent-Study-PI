@@ -90,13 +90,14 @@ html(lang='en')
                     option(value="SMARTRTL") Smart Return to Takeoff 
                     option(value="SYSID") Special diagnostic/modeling mode
 
-
-
-
         .opencv
             h2 Drone Capture
             button(onclick="RunImage()") RUN IMAGE
             .captures
+            .camera_one
+                h1 CV Cam
+                img#webcam_cv.webcam(src= '/cv_feed', autoplay, muted, playsinline, async)
+
 
 
 

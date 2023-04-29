@@ -4,3 +4,5 @@ opencv-python
 python-dotenv
 dronekit
 dronekit-sitl
+requests
+numpy
