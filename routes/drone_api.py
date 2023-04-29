@@ -1,4 +1,4 @@
-from dronekit import connect, VehicleMode
+from dronekit import connect, VehicleMode, LocationGlobal
 import os
 from flask import Blueprint, Response, jsonify, request
 from dotenv import load_dotenv
@@ -9,6 +9,8 @@ from navigation.square_search import get_visibility_radius, square_search
 load_dotenv(".env")
 
 drone = Blueprint("drone", __name__, url_prefix="/drone")
+drone_location = []
+doingPath = False
 
 
 def getIP():
@@ -65,7 +67,6 @@ def square():
     visibility_radius = get_visibility_radius(90, alt)
 
     path = square_search(lat, long, radius, visibility_radius)
-    print(path)
     return jsonify(path)
 
 
@@ -95,3 +96,41 @@ def takeoff():
     vehicle.wait_simple_takeoff(alt=target_alt, timeout=30)
     vehicle.wait_for_alt(alt=target_alt)
     return jsonify({"success": True})
+
+
+@drone.post("/api/execute_path")
+def execute_path():
+    if not request.is_json:
+        return Response(status=400)
+    content = request.json
+    global doingPath
+    if doingPath:
+        return jsonify({"success": False, "error": "already in path"})
+
+    path = content.get("path").get("g")
+    alt = content.get("alt")
+    doingPath = True
+    for target in path:
+        if vehicle.mode.name == "RTL" or vehicle.mode.name == "SMARTRTL":
+            doingPath = False
+            return jsonify({"success": False})
+        poll_location()
+        current_loc = LocationGlobal(target.get("lat"), target.get("lng"), alt)
+        vehicle.simple_goto(location=current_loc)
+    doingPath = False
+    return jsonify({"success": True})
+
+
+def poll_location():
+    drone_location.append(
+        {
+            "lat": vehicle.location.global_frame.lat,
+            "long": vehicle.location.global_frame.lon,
+            "att": vehicle.location.global_frame.alt,
+        }
+    )
+
+
+@drone.post("/api/my_path")
+def my_path():
+    return jsonify(drone_location)

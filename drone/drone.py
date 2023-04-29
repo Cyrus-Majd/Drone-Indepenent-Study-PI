@@ -2,7 +2,7 @@
 from dronekit import Vehicle, VehicleMode
 
 
-def getJSONState(vehicle):
+def getJSONState(vehicle: Vehicle):
     gps = {
         "lat": vehicle.location.global_frame.lat,
         "long": vehicle.location.global_frame.lon,

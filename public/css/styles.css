@@ -20,8 +20,17 @@ body {
   background-color: #9dc5bb;
   padding: 2em;
 }
+.camera_case {
+  position: relative;
+}
+.outputCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 .webcam {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  min-width: 450px;
   width: 450px;
   height: auto;
 }
@@ -188,4 +197,9 @@ select#drone_select_mode {
 
 select#drone_select_mode option[value="NULL"] {
   display: none;
+}
+#outputCanvas {
+  position: absolute;
+  width: 800;
+  height: 450;
 }

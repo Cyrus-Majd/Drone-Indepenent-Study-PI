@@ -156,6 +156,42 @@ async function LinearSearch() {
     mapPath(path, "linearsearch")
 
 }
+async function ExecuteSearch() {
+    if (!searchMarker) {
+        alert("Please select a search area!")
+        return;
+    }
+    if (!searchMarker.currentSearch) {
+        alert("Please select a search!")
+        return;
+    }
+    if (!searchMarker.currentSearch.path) {
+        alert("Please select a search path!")
+        return;
+    }
+    $('.square_search').addClass("disabled")
+    $('.linear_search').addClass("disabled")
+
+    var path = searchMarker.currentSearch.path.getPath()
+    var data = {
+        'path': path,
+        "alt": searchMarker.currentSearch.alt
+    }
+    var response = await fetch('/drone/api/execute_path', {
+        'method': "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    console.log(response)
+
+    $('.square_search').removeClass("disabled")
+    $('.linear_search').removeClass("disabled")
+}
+
+
+
 function clearMarkers() {
     searchMarker?.setMap(null);
     searchMarker?.currentSearch.setMap(null)

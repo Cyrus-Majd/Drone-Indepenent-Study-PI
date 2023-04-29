@@ -1,4 +1,4 @@
-function onOpenCvReady() {
+async function onOpenCvReady() {
     // Retrieve the img element
 
 }
@@ -16,4 +16,6 @@ function RunImage() {
 
     // Display the OpenCV image on the canvas
     cv.imshow(canvas, cvImage);
+    window.requestAnimationFrame(RunImage);
+
 }
