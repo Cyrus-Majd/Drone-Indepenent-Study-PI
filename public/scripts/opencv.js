@@ -1,11 +1,5 @@
 function onOpenCvReady() {
     // Retrieve the img element
-    imgElement.addEventListener('change', function me() {
-
-
-        // Replace the img element with the canvas element
-        imgElement.parentNode.replaceChild(canvas, imgElement);
-    })
 
 }
 function RunImage() {
