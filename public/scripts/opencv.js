@@ -1,6 +1,6 @@
 function onOpenCvReady() {
     // Retrieve the img element
-    var imgElement = document.getElementById('webcam_down');
+    var imgElement = document.getElementById('webcam_front');   // TEMPORARY FOR DEBUG
     imgElement.onload = function me() {
         // Create a new canvas element to display the image
         var canvas = document.createElement('canvas');
