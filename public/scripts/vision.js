@@ -1,9 +1,9 @@
 function startComputerVision() {
     $(document).ready(function () {
-        var video = document.getElementById('webcam_front')
+        var video = document.getElementById('cv_webcam_front')
         video.onload = function () {
             console.log("LOADING")
-            var canvas = document.getElementById('outputCanvas')
+            var canvas = document.getElementById('cv_outputCanvas')
             var context = canvas.getContext('2d');
             var tracker = new tracking.ColorTracker("cyan");
 

@@ -97,6 +97,9 @@ html(lang='en')
             .camera_one
                 h1 CV Cam
                 img#webcam_cv.webcam(src= '/cv_feed', autoplay, muted, playsinline, async)
+                .camera_case
+                    img#cv_webcam_front.webcam(src= '/front_feed', autoplay, muted, playsinline)
+                    canvas#cv_outputCanvas.outputCanvas
 
 
 
