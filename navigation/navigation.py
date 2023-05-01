@@ -63,8 +63,8 @@ def square_search(center_lat, center_long, max_radius, visibility_radius):
     return pattern
 
 def linear_search(center_lat, center_long, max_radius, visibility_radius):
-    
-    start_lat, start_long = move_point(center_lat,center_long,225,max_radius)
+
+    start_lat, start_long = move_point(center_lat,center_long,225,max_radius * math.sqrt(2))
     max_diameter = max_radius*2
     pattern = [(start_lat,start_long)]
     search_length = 0
@@ -76,7 +76,7 @@ def linear_search(center_lat, center_long, max_radius, visibility_radius):
         )
         pattern.append((current_lat, current_long))
         current_lat, current_long = move_point(
-            current_lat, current_long, visibility_radius, max_diameter
+            current_lat, current_long, 90, visibility_radius
         )
         pattern.append((current_lat, current_long))
         search_length += visibility_radius
