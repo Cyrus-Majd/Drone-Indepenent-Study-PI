@@ -74,6 +74,9 @@ function mapPath(pathCoordinates, type) {
     if (type == "squaresearch") {
         color = '#FF00FF'
     }
+    if (type == "linear_search") {
+        color = '#FFF000'
+    }
     var oldpath = searchMarker.currentSearch.path
     var path = new google.maps.Polyline({
         path: pathCoordinates,
@@ -153,7 +156,7 @@ async function LinearSearch() {
     console.log(res)
     var path = parsePath(res)
     console.log(path)
-    mapPath(path, "linearsearch")
+    mapPath(path, "linear_search")
 
 }
 async function ExecuteSearch() {
