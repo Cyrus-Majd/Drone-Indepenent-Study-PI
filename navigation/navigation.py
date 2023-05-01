@@ -71,22 +71,19 @@ def linear_search(center_lat, center_long, max_radius, visibility_radius):
     current_lat = start_lat
     current_long = start_long
     while search_length < max_diameter:
+        #vertical movement
         current_lat, current_long = move_point(
             current_lat, current_long, 180*((search_length/visibility_radius) % 2), max_diameter
         )
-       
-
         pattern.append((current_lat, current_long))
+
+        #lateral movement
         current_lat, current_long = move_point(
             current_lat, current_long, 90, visibility_radius
         )
         pattern.append((current_lat, current_long))
-        search_length += visibility_radius
 
-        #extra check
-        if search_length >= max_diameter:
-            break
-        
+        search_length += visibility_radius
 
     return pattern
 
