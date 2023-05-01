@@ -4,7 +4,7 @@ from flask import Blueprint, Response, jsonify, request
 from dotenv import load_dotenv
 
 from drone.drone import getHud, getJSONState
-from navigation.square_search import get_visibility_radius, square_search
+from navigation.navigation import get_visibility_radius, square_search, linear_search
 
 load_dotenv(".env")
 
@@ -67,6 +67,22 @@ def square():
     visibility_radius = get_visibility_radius(90, alt)
 
     path = square_search(lat, long, radius, visibility_radius)
+    return jsonify(path)
+
+@drone.post("/api/search/linear")
+def linear():
+    if not request.is_json:
+        return Response(status=400)
+    content = request.json
+
+    lat = content.get("lat")
+    long = content.get("long")
+    radius = content.get("radius")
+    alt = content.get("alt")
+
+    visibility_radius = get_visibility_radius(90, alt)
+
+    path = linear_search(lat, long, radius, visibility_radius)
     return jsonify(path)
 
 
