@@ -64,10 +64,10 @@ def public(path):
     return send_from_directory("public", path)
 
 
-@app.route("/current_image")
+@app.route("/current_image/<camera>")
 def current_image(camera="down"):
     cam = camera_forward if camera == "front" else camera_down
-    success, frame = camera.read()
+    success, frame = cam.read()
     if success:
         return send_file(cam.imencode(".jpg", frame))
 
