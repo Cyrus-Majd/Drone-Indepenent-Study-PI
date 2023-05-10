@@ -26,9 +26,9 @@ $(document).ready(function () {
             indicator.setRoll(data.roll);			// Sets the roll of an attitude indicator
             indicator.setPitch(data.pitch);			// Sets the pitch of an attitude indicator
             indicator.setHeading(data.heading);		// Sets the heading of an heading indicator
-            indicator.setVario(data.vario);			// Sets the climb speed of an variometer indicator
-            indicator.setAirSpeed(data.speed);		// Sets the speed of an airspeed indicator
-            indicator.setAltitude(data.altitude);	// Sets the altitude of an altimeter indicator
+            // indicator.setVario(data.vario);			// Sets the climb speed of an variometer indicator
+            // indicator.setAirSpeed(data.speed);		// Sets the speed of an airspeed indicator
+            // indicator.setAltitude(data.altitude);	// Sets the altitude of an altimeter indicator
             airspeed.setAirSpeed(data.speed);
             heading.setHeading(data.heading);
             variometer.setVario(data.vario);
