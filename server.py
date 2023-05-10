@@ -111,12 +111,19 @@ def generate_cv_frames(camera):
         if not success:
             break
 
+        # Reduce the size of the frame
+        img = cv2.resize(img, (640, 480))
+
         # Process the frame
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         lower_blue = np.array([90, 50, 50])
         upper_blue = np.array([150, 255, 255])
         mask = cv2.inRange(hsv, lower_blue, upper_blue)
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        # Keep only the largest contour
+        contours = sorted(contours, key=cv2.contourArea, reverse=True)[:1]
+
         cv2.drawContours(img, contours, -1, (0, 255, 0), 2)
 
         # Convert the processed frame to JPEG format
