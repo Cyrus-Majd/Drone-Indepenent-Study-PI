@@ -150,3 +150,14 @@ def poll_location():
 @drone.post("/api/my_path")
 def my_path():
     return jsonify(drone_location)
+
+
+@drone.post("/api/land")
+def land():
+    vehicle.mode = VehicleMode("LAND")
+    return jsonify({"status": "landed"})
+
+@drone.post("/api/twirl")
+def twirl():
+    vehicle.condition_yaw(360,relative = True)
+    return jsonify({"status": "twirling"})
