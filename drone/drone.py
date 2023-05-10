@@ -35,7 +35,7 @@ def getHud(vehicle):
     data = {
         "roll": vehicle.attitude.roll,
         "pitch": vehicle.attitude.pitch,
-        "yaw": vehicle.attitude.yaw,
+        # "yaw": vehicle.attitude.yaw,
         "heading": vehicle.heading,
         "vario": vehicle.velocity[2],
         "airspeed": vehicle.airspeed,

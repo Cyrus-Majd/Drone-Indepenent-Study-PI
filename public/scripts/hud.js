@@ -23,9 +23,9 @@ $(document).ready(function () {
         $.get("/drone/api/hud", function (data) {
             var now = new Date()
             $('.drone_ping').text(`Ping: ${now - then}ms`)
-            indicator.setRoll(data.roll);			// Sets the roll of an attitude indicator
-            indicator.setPitch(data.pitch);			// Sets the pitch of an attitude indicator
-            indicator.setHeading(data.heading);		// Sets the heading of an heading indicator
+            indicator.setRoll(30*Math.sin(data.roll));			// Sets the roll of an attitude indicator
+            indicator.setPitch(50*Math.sin(data.pitch));			// Sets the pitch of an attitude indicator
+            // indicator.setHeading(data.heading);		// Sets the heading of an heading indicator
             // indicator.setVario(data.vario);			// Sets the climb speed of an variometer indicator
             // indicator.setAirSpeed(data.speed);		// Sets the speed of an airspeed indicator
             // indicator.setAltitude(data.altitude);	// Sets the altitude of an altimeter indicator
