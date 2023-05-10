@@ -1,8 +1,7 @@
 from dronekit import connect, VehicleMode, LocationGlobal
-import os
+import os,threading,time
 from flask import Blueprint, Response, jsonify, request
 from dotenv import load_dotenv
-
 from drone.drone import getHud, getJSONState
 from navigation.navigation import get_visibility_radius, square_search, linear_search
 
@@ -11,23 +10,38 @@ load_dotenv(".env")
 drone = Blueprint("drone", __name__, url_prefix="/drone")
 drone_location = []
 doingPath = False
-connected = False
+vehicle = None
 
 def getIP():
     if bool(os.getenv("DEV")):
         return "tcp:127.0.0.1:5760"
     else:
         return os.getenv("DRONE_IP")
+    
+def check_vehicle():
+    if vehicle is None:
+        try:
+            print("trying to connect to ", getIP())
+            vehicle = connect(getIP(), wait_ready=True, baud=57600)
+            print("Connnected to drone!!")
+        except:
+            print("unable to connect to vehicle")
+
+def check_thread():
+    while True:
+        check_vehicle
+        time.wait(10)
 
 
 try:
     print("trying to connect to ", getIP())
     vehicle = connect(getIP(), wait_ready=True, baud=57600)
-    connected = True
     print("Connnected to drone!!")
 except:
     print("unable to connect to vehicle")
 
+check = threading.Thread(target=check_thread)
+check.start()
 
 @drone.route("/api/hud")
 def hud():
@@ -43,20 +57,6 @@ def json():
 
 @drone.post("/api/arm")
 def arm():
-    if not connected:
-        try:
-            print("trying to connect to ", getIP())
-            vehicle = connect(getIP(), wait_ready=True, baud=57600)
-            connected = True
-            print("Connnected to drone!!")
-        except:
-            print("unable to connect to vehicle")
-            return jsonify(
-            {
-            "drone_arm": "Drone not connected",
-            }
-            )
-
     if vehicle.armed:
         vehicle.disarm()
     else:
