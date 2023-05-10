@@ -87,3 +87,14 @@ async function land(){
     var res = await response.json();
     console.log(res)
 }
+async function homeDrone(){
+    var response = await fetch('/drone/api/home', {
+        'method': "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    var res = await response.json();
+    console.log(res)
+}
