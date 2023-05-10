@@ -11,6 +11,8 @@ drone = Blueprint("drone", __name__, url_prefix="/drone")
 drone_location = []
 doingPath = False
 vehicle = None
+#tuple of form (lat,long,alt(hard coded lol))
+home_coords = None
 
 def getIP():
     if bool(os.getenv("DEV")):
@@ -119,6 +121,7 @@ def set_mode():
 
 @drone.post("/api/takeoff")
 def takeoff():
+    home = (vehicle.location.global_frame.lat, vehicle.location.global_frame.lon, 10)
     target_alt = 25
     if not vehicle.is_armable:
         return jsonify({"success": False})
@@ -150,6 +153,13 @@ def execute_path():
         vehicle.simple_goto(location=current_loc)
     doingPath = False
     return jsonify({"success": True})
+
+@drone.post("/api/return_home")
+def return_home():
+    if home_coords is not None:
+        vehicle.simple_goto(location=home_coords)
+        return jsonify({"status": "returning"})
+    return jsonify({"status": "Error: no home set"})
 
 
 def poll_location():
