@@ -11,7 +11,7 @@ load_dotenv(".env")
 drone = Blueprint("drone", __name__, url_prefix="/drone")
 drone_location = []
 doingPath = False
-
+connected = False
 
 def getIP():
     if bool(os.getenv("DEV")):
@@ -23,7 +23,8 @@ def getIP():
 try:
     print("trying to connect to ", getIP())
     vehicle = connect(getIP(), wait_ready=True, baud=57600)
-    print("Connnect to drone!!")
+    connected = True
+    print("Connnected to drone!!")
 except:
     print("unable to connect to vehicle")
 
@@ -42,6 +43,20 @@ def json():
 
 @drone.post("/api/arm")
 def arm():
+    if not connected:
+        try:
+            print("trying to connect to ", getIP())
+            vehicle = connect(getIP(), wait_ready=True, baud=57600)
+            connected = True
+            print("Connnected to drone!!")
+        except:
+            print("unable to connect to vehicle")
+            return jsonify(
+            {
+            "drone_arm": "Drone not connected",
+            }
+            )
+
     if vehicle.armed:
         vehicle.disarm()
     else:
