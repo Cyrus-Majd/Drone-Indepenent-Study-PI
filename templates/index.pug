@@ -73,6 +73,8 @@ html(lang='en')
             h2 Drone Commands
             .command_buttons
                 button.arm(onclick="disarmOrArm()")
+                button.home(onclick="takeOff()") Takeoff
+                button.home(onclick="land()") Land
                 button.home(onclick="homeDrone()") Home
                 button.square_search(onclick="SquareSearch()") Sqaure Search
                 button.linear_search(onclick="LinearSearch()") Linear Search
@@ -97,9 +99,9 @@ html(lang='en')
             .camera_one
                 h1 CV Cam
                 img#webcam_cv.webcam(src= '/cv_feed', autoplay, muted, playsinline, async)
-                .camera_case
-                    img#cv_webcam_front.webcam(src= '/front_feed', autoplay, muted, playsinline)
-                    canvas#cv_outputCanvas.outputCanvas
+                //- .camera_case
+                //-     img#cv_webcam_front.webcam(src= '/front_feed', autoplay, muted, playsinline)
+                //-     canvas#cv_outputCanvas.outputCanvas
 
 
 
