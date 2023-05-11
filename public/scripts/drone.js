@@ -65,7 +65,10 @@ async function setMode(mode) {
     $('#drone_select_mode').val(res.mode)
 
 }
-async function takeOff(){
+async function takeOff() {
+    data = {
+        "mode": ""
+    }
     var response = await fetch('/drone/api/takeoff', {
         'method': "post",
         headers: {
@@ -76,7 +79,10 @@ async function takeOff(){
     var res = await response.json();
     console.log(res)
 }
-async function land(){
+async function land() {
+    data = {
+        "mode": ""
+    }
     var response = await fetch('/drone/api/land', {
         'method': "post",
         headers: {
@@ -87,7 +93,10 @@ async function land(){
     var res = await response.json();
     console.log(res)
 }
-async function homeDrone(){
+async function homeDrone() {
+    data = {
+        "mode": ""
+    }
     var response = await fetch('/drone/api/home', {
         'method': "post",
         headers: {
